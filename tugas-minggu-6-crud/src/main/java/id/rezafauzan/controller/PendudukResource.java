@@ -37,10 +37,14 @@ public class PendudukResource {
     @PUT
     @Transactional
     public Penduduk update(Penduduk pndk) {
-
         Penduduk pendudukUpdate = Penduduk.findById(pndk.id);
         if(pendudukUpdate!=null){
             pendudukUpdate.setNama(pndk.nama);
+            pendudukUpdate.setAlamat(pndk.alamat);
+            pendudukUpdate.setJenis_kelamin(pndk.jenis_kelamin);
+            pendudukUpdate.setEmail(pndk.email);
+            pendudukUpdate.setUmur(pndk.umur);
+            pendudukUpdate.setPekerjaan(pndk.pekerjaan);
             Penduduk.persist(pendudukUpdate);
             return pendudukUpdate;
         }else{
