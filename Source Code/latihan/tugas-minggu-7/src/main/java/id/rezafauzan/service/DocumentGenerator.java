@@ -10,15 +10,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
+
 
 @ApplicationScoped
 public class DocumentGenerator {
     public void generateExcelFile(List<Komoditas> data) throws IOException {
 
         //Buka File Template
-        FileInputStream templateFile = new FileInputStream(new File("GeneratedDocument/ReportTemplate.xlsx"));
+        FileInputStream templateFile = new FileInputStream(new File("assets/GeneratedDocument/Template/ReportTemplate.xlsx"));
         XSSFWorkbook workbook = new XSSFWorkbook(templateFile);
 
         // Pilih Sheet Page ke 1
@@ -45,7 +46,10 @@ public class DocumentGenerator {
         }
 
         //Generate File Yang Sudah Diisi
-        FileOutputStream outputStream = new FileOutputStream("Terbuat.xlsx");
+        String namaFile;
+        String filePath = "assets/GeneratedDocument/";
+        namaFile = LocalDate.now().toString();
+        FileOutputStream outputStream = new FileOutputStream(filePath + "Generated Production Komoditas Reports For Farm Pak Dengklek Created At-" + namaFile + ".xlsx");
         workbook.write(outputStream);
 
         //Closing

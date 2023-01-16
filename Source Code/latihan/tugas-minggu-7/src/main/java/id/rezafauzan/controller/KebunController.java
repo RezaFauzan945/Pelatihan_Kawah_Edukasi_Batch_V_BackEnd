@@ -3,22 +3,24 @@ package id.rezafauzan.controller;
 import id.rezafauzan.model.Komoditas;
 import id.rezafauzan.service.DocumentGenerator;
 import io.quarkus.mailer.Mail;
-import io.quarkus.mailer.reactive.ReactiveMailer;
-import io.quarkus.scheduler.Scheduled;
-import io.smallrye.mutiny.Uni;
+import io.quarkus.mailer.Mailer;
+import io.smallrye.common.annotation.Blocking;
+
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Collection;
 
 @Path("/kebun")
 public class KebunController {
     @Inject
-    ReactiveMailer mailer;
+    Mailer mailer;
     @Inject
     DocumentGenerator dg;
 
@@ -37,15 +39,15 @@ public class KebunController {
 
     @Path("/report")
     @GET
-
-//    public Uni<Void> kirimLaporan()
-//    {
-//        Mail email = Mail.withText("rezafauzan945@gmail.com","Test Quarkus Mailer","Pesan Ini dikirim menggunakan Quarkus Mailer");
-//        return mailer.send(email);
-//    }
-    public Response generateDocument() throws IOException {
-        dg.generateExcelFile(Komoditas.listAll());
-        return Response.ok("REPORT GENERATED").build();
+    @Blocking
+    public Void kirimLaporan() throws IOException {
+          String tanggalFile = LocalDate.now().toString();
+          dg.generateExcelFile(Komoditas.listAll());
+          Response.ok("REPORT GENERATED").build();
+          String fileName = "Generated Production Komoditas Reports For Farm Pak Dengklek Created At-"+ LocalDate.now()+ ".xlsx";
+          String attachPath = "assets/GeneratedDocument/" + fileName;
+          Mail email = Mail.withText("rezafauzan945@gmail.com","Laporan Produksi Pertanian Pak Dengklek","Pesan Ini dikirim menggunakan Quarkus Mailer! Lihat Lampiran Untuk Melihat Laporan Produksi Pak Dengklek").addAttachment(fileName, new File(attachPath), "text/plain");
+          mailer.send(email);
+          return null;
     }
-
 }
