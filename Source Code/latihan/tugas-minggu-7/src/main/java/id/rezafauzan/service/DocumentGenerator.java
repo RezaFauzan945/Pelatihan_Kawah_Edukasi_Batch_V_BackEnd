@@ -29,7 +29,7 @@ public class DocumentGenerator {
         Row row = sheet.createRow(1);
         row.createCell(0).setCellValue("ID");
         row.createCell(1).setCellValue("KOMODITAS");
-        row.createCell(2).setCellValue("TOTAL");
+        row.createCell(2).setCellValue("TOTAL(KG)");
         row.createCell(3).setCellValue("CREATED AT");
         row.createCell(4).setCellValue("UPDATED AT");
 

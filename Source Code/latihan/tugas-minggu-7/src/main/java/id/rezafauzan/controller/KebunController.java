@@ -40,14 +40,13 @@ public class KebunController {
     @Path("/report")
     @GET
     @Blocking
-    public Void kirimLaporan() throws IOException {
+    public Response kirimLaporan() throws IOException {
           String tanggalFile = LocalDate.now().toString();
           dg.generateExcelFile(Komoditas.listAll());
-          Response.ok("REPORT GENERATED").build();
           String fileName = "Generated Production Komoditas Reports For Farm Pak Dengklek Created At-"+ LocalDate.now()+ ".xlsx";
           String attachPath = "assets/GeneratedDocument/" + fileName;
           Mail email = Mail.withText("rezafauzan945@gmail.com","Laporan Produksi Pertanian Pak Dengklek","Pesan Ini dikirim menggunakan Quarkus Mailer! Lihat Lampiran Untuk Melihat Laporan Produksi Pak Dengklek").addAttachment(fileName, new File(attachPath), "text/plain");
           mailer.send(email);
-          return null;
+          return Response.ok("REPORT GENERATED").build();
     }
 }

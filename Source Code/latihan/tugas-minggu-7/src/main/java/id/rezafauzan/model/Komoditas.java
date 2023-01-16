@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
