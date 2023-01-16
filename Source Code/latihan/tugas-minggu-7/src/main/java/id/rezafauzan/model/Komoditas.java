@@ -55,4 +55,12 @@ public class Komoditas extends PanacheEntityBase {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
 }
